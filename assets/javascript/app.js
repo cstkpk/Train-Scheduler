@@ -23,7 +23,7 @@ $("#submit").on("click", function(event){
     var firstTrainTime = $("#first-train").val().trim();
     var frequency = $("#frequency").val().trim();
 
-    // Creates local "temporary" object for holding employee data
+    // Creates local "temporary" object for holding train data
     var temp = {
         train: trainName,
         destination: destination,
@@ -53,6 +53,37 @@ $("#submit").on("click", function(event){
     $("#destination").val("");
     $("#first-train").val("");
     $("#frequency").val("");
+
+});
+
+// Create Firebase event for adding train to the database and a row in the html when a user adds an entry
+database.ref().on('child_added', function(childSnapshot) {
+    console.log(childSnapshot.val());
+
+    // Store everything into a variable.
+    var trainName = childSnapshot.val().train;
+    var destination = childSnapshot.val().destination;
+    var firstTrainTime = childSnapshot.val().firstTrain;
+    var frequency = childSnapshot.val().frequency;
+
+    // Calculate next arrival
+    // var nextArrival = 
+
+    // Calculate minutes away
+    // var minAway = 
+
+    // Create the new row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(destination),
+        // $("<td>").text(firstTrainTime),
+        $("<td>").text(frequency),
+        // $("<td>").text(nextArrival),
+        // $("<td>").text(minAway)
+    );
+    
+    // Append the new row to the table
+    $("#train-schedule").append(newRow);
 
 });
 
