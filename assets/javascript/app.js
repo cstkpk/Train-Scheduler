@@ -134,6 +134,7 @@ function trainTimes() {
     });
     
 }
+
 trainTimes();
 setInterval(trainTimes, 20000)
 
