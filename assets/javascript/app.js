@@ -71,7 +71,7 @@ $("#submit").on("click", function(event){
 //     // Calculate minutes away by first:
 //     // Subtracting firstTrainTime from current time and finding the modulus between this difference and frequency
 //     // var remainder = moment().diff(moment.unix(parseInt(firstTrainTime)), "minutes") % frequency;
-//     var remainder = moment().diff(moment(firstTrainTime, "HH:mm"), "minutes") % frequency;
+//     var remainder = moment().diff(moment(firstTrainTime, "HH:mm").subtract(1, "years"), "minutes") % frequency;
 //     // Then find difference between frequency and remainder
 //     var minAway = frequency - remainder;
 //     console.log("Minutes away: " + minAway);
@@ -104,13 +104,11 @@ function trainTimes() {
         var destination = childSnapshot.val().destination;
         var firstTrainTime = childSnapshot.val().firstTrain;
         var frequency = childSnapshot.val().frequency;
-        // console.log("First train time: " + moment(firstTrainTime, "X").format("HH:mm"));
         console.log("First train time: " + firstTrainTime);
     
         // Calculate minutes away by first:
         // Subtracting firstTrainTime from current time and finding the modulus between this difference and frequency
-        // var remainder = moment().diff(moment.unix(parseInt(firstTrainTime)), "minutes") % frequency;
-        var remainder = moment().diff(moment(firstTrainTime, "HH:mm"), "minutes") % frequency;
+        var remainder = moment().diff(moment(firstTrainTime, "HH:mm").subtract(1, "years"), "minutes") % frequency;
         // Then find difference between frequency and remainder
         var minAway = frequency - remainder;
         console.log("Minutes away: " + minAway);
@@ -136,7 +134,7 @@ function trainTimes() {
 }
 
 trainTimes();
-setInterval(trainTimes, 20000)
+setInterval(trainTimes, 30000)
 
 
 // https://console.firebase.google.com/u/0/project/train-scheduler-48407/overview
