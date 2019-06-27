@@ -20,7 +20,8 @@ $("#submit").on("click", function(event){
     // Grab user input
     var trainName = $("#train-name").val().trim();
     var destination = $("#destination").val().trim();
-    var firstTrainTime = $("#first-train").val().trim();
+    var firstTrainTime = moment($("#first-train").val().trim(), "HH:mm").format("X");
+    // console.log(firstTrainTime);
     var frequency = $("#frequency").val().trim();
 
     // Creates local "temporary" object for holding train data
@@ -65,21 +66,31 @@ database.ref().on('child_added', function(childSnapshot) {
     var destination = childSnapshot.val().destination;
     var firstTrainTime = childSnapshot.val().firstTrain;
     var frequency = childSnapshot.val().frequency;
+    console.log(firstTrainTime);
+    console.log(typeof(firstTrainTime));
+
+    // Calculate minutes away by subtracting firstTrainTime from current time and finding the modulus between this difference and frequency
+    var remainder = moment().diff(moment.unix(parseInt(firstTrainTime)), "minutes") % frequency;
+    console.log("Remainder: " + remainder);
+    // Then find difference between frequency and remainder
+    var minAway = frequency - remainder;
+    console.log(minAway);
 
     // Calculate next arrival
-    // var nextArrival = 
+    var nextArrival = moment().add((minAway), "m").format("HH:mm");
+    console.log(nextArrival);
 
-    // Calculate minutes away
-    // var minAway = 
+
+
+
 
     // Create the new row
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(destination),
-        // $("<td>").text(firstTrainTime),
         $("<td>").text(frequency),
-        // $("<td>").text(nextArrival),
-        // $("<td>").text(minAway)
+        $("<td>").text(nextArrival),
+        $("<td>").text(minAway)
     );
     
     // Append the new row to the table
