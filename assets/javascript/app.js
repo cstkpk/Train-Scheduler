@@ -134,7 +134,7 @@ function trainTimes() {
 }
 
 trainTimes();
-setInterval(trainTimes, 30000)
+// setInterval(trainTimes, 30000);
 
 
 // https://console.firebase.google.com/u/0/project/train-scheduler-48407/overview
